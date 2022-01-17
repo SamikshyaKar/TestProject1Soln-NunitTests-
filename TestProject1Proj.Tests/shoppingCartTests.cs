@@ -111,6 +111,42 @@ namespace TestProject1Proj
 
         //}
 
+        public void shouldreturnarticlscombinedeaddedtocart()
+        {
+            var item1 = new addtocarditems()
+            {
+                ArticleID = 45,
+                Quantity = 5
+            };
+
+
+            var request = new addtoCartRequest()
+            {
+                item = item1
+            };
+
+            var manager = new ShoppingCartManager();
+            AddToCartResponse response = manager.addtocart(request);
+
+            var item2 = new addtocarditems()
+            {
+                ArticleID = 45,
+                Quantity = 10
+            };
+
+
+            request = new addtoCartRequest()
+            {
+                item = item2
+            };
+            response = manager.addtocart(request);
+
+            Assert.NotNull(response);
+            //Assert.Contains(item1, response.Items);
+            //Assert.Contains(item2, response.Items);
+            Assert.That(Array.Exists(response.Items, items => items.ArticleID == 45 && items.Quantity == 15));
+
+        }
 
     }
 }
